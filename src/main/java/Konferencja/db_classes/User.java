@@ -17,7 +17,7 @@ import java.util.Collections;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-@Table
+@Table(name = "user")
 @Entity
 public class User implements UserDetails {
 
@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    private Boolean logged;
+    private Boolean locked;
     private Boolean enabled;
 
     public User(String name,
@@ -41,7 +41,7 @@ public class User implements UserDetails {
                 String email,
                 String password,
                 UserRole userRole,
-                Boolean logged,
+                Boolean locked,
                 Boolean enabled) {
         this.name = name;
         this.last_name = last_name;
@@ -49,7 +49,7 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.userRole = userRole;
-        this.logged = logged;
+        this.locked = locked;
         this.enabled = enabled;
     }
 
