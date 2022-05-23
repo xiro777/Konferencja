@@ -1,6 +1,9 @@
 package Konferencja.repositories;
 
+import Konferencja.db_classes.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository implements JpaRepository<User,Long> {
+@Repository
+public interface UserRepository extends JpaRepository<User,Long> {
 }

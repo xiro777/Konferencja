@@ -25,8 +25,6 @@ public class Event {
     @Column(name = "event_date",nullable = false)
     private Date eventDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "lecture_id")
-    List<Lecture> list_of_lecture_in_event;
+
 
 }
