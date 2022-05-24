@@ -1,5 +1,6 @@
 package Konferencja.controllers;
 
+import Konferencja.request.RegistrationRequest;
 import Konferencja.services.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,7 @@ public class RegistrationController {
 
     private RegistrationService registrationService;
 
-    public String register(@RequestBody RegistrationService request){
+    public String register(@RequestBody RegistrationRequest request){
         return registrationService.register(request);
     }
 }

@@ -17,7 +17,7 @@ import java.util.Collections;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "Table_user")
 @Entity
 public class User implements UserDetails {
 
@@ -25,7 +25,7 @@ public class User implements UserDetails {
     @SequenceGenerator(name = "user_generator", sequenceName = "user_generator", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
     private Long id;
-    private String name;
+    private String first_name;
     private String last_name;
     private String username;
     private String email;
@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private Boolean locked;
     private Boolean enabled;
 
-    public User(String name,
+    public User(String first_name,
                 String last_name,
                 String username,
                 String email,
@@ -43,7 +43,7 @@ public class User implements UserDetails {
                 UserRole userRole,
                 Boolean locked,
                 Boolean enabled) {
-        this.name = name;
+        this.first_name = first_name;
         this.last_name = last_name;
         this.username = username;
         this.email = email;
@@ -53,10 +53,18 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
+    public User(String first_name, String last_name, String email, String password, UserRole userRole) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.password = password;
+        this.userRole = userRole;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority =
-                new SimpleGrantedAuthority(UserRole.name());
+                new SimpleGrantedAuthority(userRole.name());
         return Collections.singletonList(authority);
     }
 
