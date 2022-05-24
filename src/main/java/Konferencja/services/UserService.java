@@ -1,5 +1,6 @@
 package Konferencja.services;
 
+import Konferencja.db_classes.ConfirmationToken;
 import Konferencja.db_classes.User;
 import Konferencja.repositories.EventRepository;
 import Konferencja.repositories.UserRepository;
@@ -10,6 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
@@ -17,6 +21,7 @@ public class UserService implements UserDetailsService {
             "User with email %s not found!";
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -37,9 +42,18 @@ public class UserService implements UserDetailsService {
         user.setPassword(encodedPassword);
         userRepository.save(user);
 
-        // TODO: Send confirmation token
+        String token = UUID.randomUUID().toString();
 
-        return "";
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                user
+        );
+
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        //TODO: SEND EMAIL
+        return token;
     }
 
 }
